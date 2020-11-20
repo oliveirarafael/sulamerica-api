@@ -133,7 +133,7 @@ public class UsuarioServiceTest {
     @Test
     public void naoDeveAtualizarUsuarioCasoJaExistaUsuarioComNomeECpfCadastrado(){
         Usuario usuario = UsuarioDataBuilderTest.builder()
-                .comNome("Fulano.4")
+                .comNome("Fulano.6")
                 .comCpf("12346584690")
                 .comDataNascimento(LocalDate.of(1985, 5, 12))
                 .masculino()
