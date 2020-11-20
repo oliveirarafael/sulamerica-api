@@ -4,6 +4,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.security.core.GrantedAuthority;
 
@@ -15,6 +17,9 @@ public class Perfil implements GrantedAuthority{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @NotNull(message = "{perfil.nome.not.null}")
+    @NotEmpty(message = "perfil.nome.not.blank")
     private String nome;
 
     public Perfil() {}

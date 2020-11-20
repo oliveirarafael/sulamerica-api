@@ -52,7 +52,7 @@ public class PerfilRepositoryTest {
         repository.save(new Perfil(ADMINISTRADOR));
         Perfil perfil = repository.findByNome(ADMINISTRADOR).get();
 
-        assertNotNull(perfil.getId());
+        assertNotNull(perfil);
     }
 
 }

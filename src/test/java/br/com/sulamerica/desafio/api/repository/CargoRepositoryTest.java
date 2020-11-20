@@ -68,6 +68,6 @@ public class CargoRepositoryTest {
         repository.save(new Cargo(GERENTE));
         Cargo cargo = repository.findByNome(GERENTE).get();
 
-        assertNotNull(cargo.getId());
+        assertNotNull(cargo);
     }
 }

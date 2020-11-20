@@ -72,10 +72,17 @@ public class UsuarioRepositoryTest {
     }
 
     @Test
-    public void deveSelecionarPerfilPeloNome(){
+    public void deveSelecionarUsuarioPeloNome(){
         usuarioRepository.save(this.usuario);
         Usuario usuario = usuarioRepository.findByNome("Fulano").get();
 
-        assertNotNull(usuario.getId());
+        assertNotNull(usuario);
+    }
+
+    @Test
+    public void deveSelecionarUsuarioPeloNomeECpf(){
+        usuarioRepository.save(this.usuario);
+        Usuario usuario = usuarioRepository.findByNomeAndCpf("Fulano", "12346584690").get();
+        assertNotNull(usuario);
     }
 }

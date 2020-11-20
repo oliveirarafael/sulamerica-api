@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Objects;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import br.com.sulamerica.desafio.api.model.entity.enums.Sexo;
 import org.springframework.security.core.GrantedAuthority;
@@ -19,23 +21,33 @@ public class Usuario implements UserDetails {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
 
+	@NotNull
+	@NotEmpty
 	private String nome;
 
+	@NotNull
+	@NotEmpty
 	private String cpf;
 
 	@Enumerated(EnumType.STRING)
+	@NotNull
 	private Sexo sexo;
 
+	@NotNull
 	private LocalDate dataNascimento;
 
 	private boolean status = true;
 
+	@NotEmpty
+	@NotNull
 	private String senha;
 
 	@ManyToOne
+	@NotNull
 	private Cargo cargo;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
+	@NotNull
 	private List<Perfil> perfis;
 
 	public Usuario() {
@@ -99,14 +111,26 @@ public class Usuario implements UserDetails {
 		return this.perfis;
 	}
 
+	public void setAuthorities(List<Perfil> perfis){
+		this.perfis = perfis;
+	}
+
 	@Override
 	public String getPassword() {
 		return this.senha;
 	}
 
+	public void setPassword(String password) {
+		this.senha = password;
+	}
+
 	@Override
 	public String getUsername() {
 		return this.nome;
+	}
+
+	public void setUsername(String username){
+		this.nome = username;
 	}
 
 	@Override
