@@ -11,6 +11,9 @@ import javax.validation.constraints.NotNull;
 
 import br.com.sulamerica.desafio.api.model.entity.enums.Sexo;
 import br.com.sulamerica.desafio.api.validation.DataNascimentoValid;
+import br.com.sulamerica.desafio.api.view.UsuarioView;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,37 +23,47 @@ public class Usuario implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@JsonView(value = {UsuarioView.DTO.class})
 	private Long id;
 
 	@NotNull
 	@NotEmpty
+	@JsonView(value = {UsuarioView.DTO.class, UsuarioView.FORM.Post.class, UsuarioView.FORM.Put.class})
 	private String nome;
 
 	@NotNull
 	@NotEmpty
 	@CPF
+	@JsonView(value = {UsuarioView.DTO.class, UsuarioView.FORM.Post.class, UsuarioView.FORM.Put.class})
 	private String cpf;
 
 	@Enumerated(EnumType.STRING)
 	@NotNull
+	@JsonView(value = {UsuarioView.DTO.class, UsuarioView.FORM.Post.class, UsuarioView.FORM.Put.class})
 	private Sexo sexo;
 
 	@NotNull
 	@DataNascimentoValid
+	@JsonView(value = {UsuarioView.DTO.class, UsuarioView.FORM.Post.class, UsuarioView.FORM.Put.class})
+	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataNascimento;
 
+	@JsonView(value = {UsuarioView.DTO.class, UsuarioView.FORM.Post.class, UsuarioView.FORM.Put.class})
 	private boolean status = true;
 
 	@NotEmpty
 	@NotNull
+	@JsonView(value = {UsuarioView.FORM.Post.class, UsuarioView.FORM.Put.class})
 	private String senha;
 
 	@ManyToOne
 	@NotNull
+	@JsonView(value = {UsuarioView.DTO.class, UsuarioView.FORM.Post.class, UsuarioView.FORM.Put.class})
 	private Cargo cargo;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@NotNull
+	@JsonView(value = {UsuarioView.DTO.class, UsuarioView.FORM.Post.class, UsuarioView.FORM.Put.class})
 	private List<Perfil> perfis;
 
 	public Usuario() {

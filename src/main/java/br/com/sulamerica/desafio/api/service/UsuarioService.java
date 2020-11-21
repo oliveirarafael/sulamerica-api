@@ -6,6 +6,8 @@ import br.com.sulamerica.desafio.api.model.entity.Perfil;
 import br.com.sulamerica.desafio.api.model.entity.Usuario;
 import br.com.sulamerica.desafio.api.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,8 +22,8 @@ public class UsuarioService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    public List<Usuario> getUsuarios() {
-        return usuarioRepository.findAll();
+    public Page<Usuario> getUsuarios(Pageable paginacao) {
+        return usuarioRepository.findAll(paginacao);
     }
 
     public Usuario getUsuarioPorId(Long id) {

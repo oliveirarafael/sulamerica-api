@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import static br.com.sulamerica.desafio.api.controller.endpoint.Endpoints.Cargo.*;
+import static br.com.sulamerica.desafio.api.controller.endpoint.Endpoints.Cargos.*;
 
 @RestController
 @RequestMapping(CARGOS_ENDPOINT)

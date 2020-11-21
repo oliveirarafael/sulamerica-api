@@ -16,7 +16,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
 
-import static br.com.sulamerica.desafio.api.controller.endpoint.Endpoints.Perfil.*;
+import static br.com.sulamerica.desafio.api.controller.endpoint.Endpoints.Perfis.*;
 
 @RestController
 @RequestMapping(PERFIS_ENDPOINT)

@@ -2,21 +2,15 @@ package br.com.sulamerica.desafio.api.repository;
 
 import br.com.sulamerica.desafio.api.config.security.Profiles;
 import br.com.sulamerica.desafio.api.model.entity.Cargo;
-import br.com.sulamerica.desafio.api.model.entity.Usuario;
-import org.aspectj.lang.annotation.Before;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-
-import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 
