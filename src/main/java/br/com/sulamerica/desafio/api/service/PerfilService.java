@@ -15,14 +15,11 @@ import java.util.Optional;
 @Service
 public class PerfilService {
 
+    @Autowired
     private PerfilRepository perfilRepository;
 
-    public PerfilService(@Autowired PerfilRepository perfilRepository){
-        this.perfilRepository = perfilRepository;
-    }
-
-    public Page<Perfil> getPerfis(Pageable paginacao) {
-        return perfilRepository.findAll(paginacao);
+    public List<Perfil> getPerfis() {
+        return perfilRepository.findAll();
     }
 
     public Perfil getPerfilPorId(Long id) {

@@ -5,10 +5,6 @@ import br.com.sulamerica.desafio.api.service.UsuarioService;
 import br.com.sulamerica.desafio.api.view.Views;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -16,9 +12,9 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
 import java.net.URI;
+import java.util.List;
 
-import static br.com.sulamerica.desafio.api.controller.endpoint.Endpoints.Usuarios.USUARIOS_ENDPOINT;
-import static br.com.sulamerica.desafio.api.controller.endpoint.Endpoints.Usuarios.USUARIOS_ID_ENDPOINT;
+import static br.com.sulamerica.desafio.api.controller.endpoint.Endpoints.Usuarios.*;
 
 @RestController
 @RequestMapping(USUARIOS_ENDPOINT)
@@ -29,11 +25,23 @@ public class UsuarioController {
 
     @GetMapping
     @JsonView(Views.UsuarioView.Dto.class)
-    public Page<Usuario> getUsuarios(@PageableDefault(sort = "nome",
-                                                      direction = Direction.DESC,
-                                                      page = 0, size = 10) Pageable paginacao){
+    public List<Usuario> getUsuarios(){
+        return service.getUsuarios();
+    }
 
-        return service.getUsuarios(paginacao);
+    @GetMapping(USUARIOS_POR_ENDPOINT)
+    @JsonView(Views.UsuarioView.Dto.class)
+    public ResponseEntity<List<Usuario>> getUsuariosPor(@RequestParam(value = "nome", required = false) String nome,
+                                                        @RequestParam(value = "cpf", required = false) String cpf,
+                                                        @RequestParam(value = "status", required = false) boolean status) {
+
+         return ResponseEntity.ok(service.getUsuarios(nome, cpf, status));
+    }
+
+    @GetMapping(USUARIOS_CPF_INICIA_ZERO_ENDPOINT)
+    @JsonView(Views.UsuarioView.Dto.class)
+    public ResponseEntity<List<Usuario>> getUsuariosCpfComecaComZero(){
+        return ResponseEntity.ok(service.getUsuarioCpfComecaComZero());
     }
 
     @GetMapping(USUARIOS_ID_ENDPOINT)
@@ -67,4 +75,6 @@ public class UsuarioController {
         service.deletar(id);
         return ResponseEntity.noContent().build();
     }
+
+
 }

@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -147,6 +148,25 @@ public class UsuarioServiceTest {
         assertThrows(ConflictException.class, () -> {
             usuarioService.atualizar(usuarioSalvo.getId(), usuario);
         });
+    }
+
+    @Test
+    public void deveRetornarUsuarioFiltro(){
+        Usuario usuario = UsuarioDataBuilderTest.builder()
+                .comNome("Fulano.6")
+                .comCpf("12346584690")
+                .comDataNascimento(LocalDate.of(1985, 5, 12))
+                .masculino()
+                .comSenha("123456")
+                .comCargo(cargo)
+                .comPerfil(perfil)
+                .build();
+
+        usuarioService.salvar(usuario);
+
+        List<Usuario> usuarios = usuarioService.getUsuarios(usuario.getUsername(), usuario.getCpf(), usuario.isAccountNonLocked());
+
+        assertTrue(usuarios.size() > 0);
     }
 
 }

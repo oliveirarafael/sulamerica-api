@@ -66,7 +66,7 @@ public class AutenticacaoControllerTest {
         String nome = "usuario.teste.2";
         String senha = "123456";
 
-        String json = mapper.writerWithView(Views.Autenticacao.Form.class).writeValueAsString(new Usuario(nome, senha));
+        String json = mapper.writerWithView(Views.AutenticacaoView.Form.class).writeValueAsString(new Usuario(nome, senha));
 
         var request = post(Endpoints.Autenticacao.AUTH_ENDPOINT).content(json).contentType(MediaType.APPLICATION_JSON);
 
@@ -94,7 +94,7 @@ public class AutenticacaoControllerTest {
         
         usuarioRepository.save(usuario);
 
-        String json = mapper.writerWithView(Views.Autenticacao.Form.class).writeValueAsString(new Usuario(nome, senha));
+        String json = mapper.writerWithView(Views.AutenticacaoView.Form.class).writeValueAsString(new Usuario(nome, senha));
         var request = post(Endpoints.Autenticacao.AUTH_ENDPOINT).content(json).contentType(MediaType.APPLICATION_JSON);
       
         mockMvc.perform(request).andExpect(status().isOk())
@@ -122,7 +122,7 @@ public class AutenticacaoControllerTest {
 
         usuarioRepository.save(usuario);
 
-        String json = mapper.writerWithView(Views.Autenticacao.Form.class).writeValueAsString(new Usuario(nome, senha));
+        String json = mapper.writerWithView(Views.AutenticacaoView.Form.class).writeValueAsString(new Usuario(nome, senha));
         var request = post(Endpoints.Autenticacao.AUTH_ENDPOINT).content(json).contentType(MediaType.APPLICATION_JSON);
 
         mockMvc.perform(request).andDo(print())

@@ -5,9 +5,9 @@ import br.com.sulamerica.desafio.api.exception.NotFoundException;
 import br.com.sulamerica.desafio.api.model.entity.Perfil;
 import br.com.sulamerica.desafio.api.model.entity.Usuario;
 import br.com.sulamerica.desafio.api.repository.UsuarioRepository;
+import br.com.sulamerica.desafio.api.repository.specification.UsuarioSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,14 +16,11 @@ import java.util.Optional;
 @Service
 public class UsuarioService {
 
+    @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public UsuarioService(@Autowired UsuarioRepository usuarioRepository){
-        this.usuarioRepository = usuarioRepository;
-    }
-
-    public Page<Usuario> getUsuarios(Pageable paginacao) {
-        return usuarioRepository.findAll(paginacao);
+    public List<Usuario> getUsuarios() {
+        return usuarioRepository.findAll();
     }
 
     public Usuario getUsuarioPorId(Long id) {
@@ -68,6 +65,30 @@ public class UsuarioService {
         usuarioRepository.save(usuarioAtualizado);
 
         return usuarioAtualizado;
+    }
+
+    public List<Usuario> getUsuarioCpfComecaComZero(){
+        List<Usuario> usuarios = usuarioRepository.findCpfsComecaZero();
+
+        if(usuarios.isEmpty()){
+            throw new NotFoundException("Nenhum usuario com CPF que comeca com zero foi encontrado");
+        }
+
+        return usuarios;
+    }
+
+    public List<Usuario> getUsuarios(String nome, String cpf, boolean status){
+        List<Usuario> usuarios = usuarioRepository.findAll(Specification
+                                                  .where(UsuarioSpecification.nome(nome))
+                                                  .or(UsuarioSpecification.cpf(cpf))
+                                                  .or(UsuarioSpecification.status(status))
+        );
+
+        if(usuarios.isEmpty()){
+            throw new NotFoundException("Usuário não foi encontrado");
+        }
+
+        return usuarios;
     }
 
 

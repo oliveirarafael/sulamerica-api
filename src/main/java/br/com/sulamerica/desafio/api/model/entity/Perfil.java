@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
+import br.com.sulamerica.desafio.api.view.Views;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.Objects;
@@ -16,10 +18,12 @@ public class Perfil implements GrantedAuthority{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView({Views.Dto.class, Views.UsuarioView.Form.Post.class, Views.UsuarioView.Form.Put.class, Views.UsuarioView.Dto.class})
     private Long id;
 
     @NotNull(message = "{perfil.nome.not.null}")
     @NotEmpty(message = "perfil.nome.not.blank")
+    @JsonView({Views.UsuarioView.Dto.class, Views.Form.Post.class, Views.Form.Put.class, Views.Dto.class})
     private String nome;
 
     public Perfil() {}

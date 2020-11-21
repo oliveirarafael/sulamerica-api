@@ -2,6 +2,9 @@ package br.com.sulamerica.desafio.api.model.entity;
 
 
 
+import br.com.sulamerica.desafio.api.view.Views;
+import com.fasterxml.jackson.annotation.JsonView;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -15,10 +18,12 @@ public class Cargo {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @JsonView({Views.Dto.class, Views.UsuarioView.Form.Post.class, Views.UsuarioView.Form.Put.class, Views.UsuarioView.Dto.class})
     private Long id;
 
     @NotNull(message = "{cargo.nome.not.null}")
     @NotEmpty(message = "{cargo.nome.not.blank}")
+    @JsonView({Views.UsuarioView.Dto.class, Views.Form.Post.class, Views.Form.Put.class, Views.Dto.class})
     private String nome;
 
     public Cargo() {
@@ -62,7 +67,7 @@ public class Cargo {
     public String toString() {
         return "Cargo{" +
                 "id=" + id +
-                ", descricao='" + nome + '\'' +
+                ", nome='" + nome + '\'' +
                 '}';
     }
 }

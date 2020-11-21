@@ -5,8 +5,6 @@ import br.com.sulamerica.desafio.api.exception.NotFoundException;
 import br.com.sulamerica.desafio.api.model.entity.Cargo;
 import br.com.sulamerica.desafio.api.repository.CargoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,15 +12,11 @@ import java.util.Optional;
 
 @Service
 public class CargoService {
-
+    @Autowired
     private CargoRepository cargoRepository;
 
-    public CargoService(@Autowired CargoRepository cargoRepository){
-        this.cargoRepository = cargoRepository;
-    }
-
-    public Page<Cargo> getCargos(Pageable paginacao) {
-        return cargoRepository.findAll(paginacao);
+    public List<Cargo> getCargos() {
+        return cargoRepository.findAll();
     }
 
     public Cargo getCargoPorId(Long id) {

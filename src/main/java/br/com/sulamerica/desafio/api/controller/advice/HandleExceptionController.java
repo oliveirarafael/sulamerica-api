@@ -39,7 +39,7 @@ public class HandleExceptionController {
 	@ResponseStatus(code = HttpStatus.CONFLICT)
 	@ExceptionHandler(ConflictException.class)
 	public Erro handleConflict(ConflictException exception){
-        return new Erro(exception.getMessage(), HttpStatus.CONFLICT.value(), HttpStatus.BAD_REQUEST.getReasonPhrase());
+        return new Erro(exception.getMessage(), HttpStatus.CONFLICT.value(), HttpStatus.CONFLICT.getReasonPhrase());
 	}
 
 	@ResponseStatus(code = HttpStatus.BAD_REQUEST)

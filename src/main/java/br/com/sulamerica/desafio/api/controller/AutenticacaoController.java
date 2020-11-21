@@ -11,14 +11,11 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.validation.Valid;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -34,9 +31,9 @@ public class AutenticacaoController {
     private TokenService tokenService;
 
     @PostMapping
-    @JsonView(Views.Autenticacao.Dto.class)
-    public ResponseEntity<Token> auth(@RequestBody @Validated(Views.Autenticacao.Form.class)
-                                      @JsonView(Views.Autenticacao.Form.class) Usuario login){
+    @JsonView(Views.AutenticacaoView.Dto.class)
+    public ResponseEntity<Token> auth(@RequestBody @Validated(Views.AutenticacaoView.Form.class)
+                                      @JsonView(Views.AutenticacaoView.Form.class) Usuario login){
 
         var dadosLogin = new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword());
         try{

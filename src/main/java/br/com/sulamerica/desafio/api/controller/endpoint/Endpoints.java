@@ -24,5 +24,7 @@ public class Endpoints {
         private Usuarios(){}
         public static final String USUARIOS_ENDPOINT = "/usuarios";
         public static final String USUARIOS_ID_ENDPOINT = "/{id}";
+        public static final String USUARIOS_CPF_INICIA_ZERO_ENDPOINT = "/cpf-inicia-zero";
+        public static final String USUARIOS_POR_ENDPOINT = "/por";
     }
 }

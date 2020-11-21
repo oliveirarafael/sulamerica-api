@@ -14,7 +14,6 @@ import br.com.sulamerica.desafio.api.validation.DataNascimentoValid;
 import br.com.sulamerica.desafio.api.view.Views;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.security.core.GrantedAuthority;
@@ -25,20 +24,20 @@ public class Usuario implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@JsonView(value = {Views.UsuarioView.Dto.class, Views.Autenticacao.Dto.class})
+	@JsonView(value = {Views.UsuarioView.Dto.class, Views.AutenticacaoView.Dto.class})
 	private Long id;
 
-	@NotNull(groups = {Views.UsuarioView.Form.class, Views.Autenticacao.Form.class})
-	@NotEmpty(groups = {Views.UsuarioView.Form.class, Views.Autenticacao.Form.class})
+	@NotNull(groups = {Views.UsuarioView.Form.class, Views.AutenticacaoView.Form.class})
+	@NotEmpty(groups = {Views.UsuarioView.Form.class, Views.AutenticacaoView.Form.class})
 	@JsonView(value = {Views.UsuarioView.Dto.class, Views.UsuarioView.Form.Post.class,
-			           Views.UsuarioView.Form.Put.class, Views.Autenticacao.Dto.class, Views.Autenticacao.Form.class})
+			           Views.UsuarioView.Form.Put.class, Views.AutenticacaoView.Dto.class, Views.AutenticacaoView.Form.class})
 	private String nome;
 
-	@NotEmpty(groups = {Views.UsuarioView.Form.Post.class, Views.Autenticacao.Form.class})
-	@NotNull(groups = {Views.UsuarioView.Form.Post.class, Views.Autenticacao.Form.class})
+	@NotEmpty(groups = {Views.UsuarioView.Form.Post.class, Views.AutenticacaoView.Form.class})
+	@NotNull(groups = {Views.UsuarioView.Form.Post.class, Views.AutenticacaoView.Form.class})
 	@JsonView(value = {Views.UsuarioView.Form.Post.class,
 			Views.UsuarioView.Form.Put.class,
-			Views.Autenticacao.Form.class})
+			Views.AutenticacaoView.Form.class})
 	private String senha;
 
 	@NotNull(groups = Views.UsuarioView.Form.class)

@@ -7,12 +7,12 @@ import com.fasterxml.jackson.annotation.JsonView;
 
 public class Token {
 
-    @JsonView(Views.Autenticacao.Dto.class)
+    @JsonView(Views.AutenticacaoView.Dto.class)
     private String token;
-    @JsonView(Views.Autenticacao.Dto.class)
+    @JsonView(Views.AutenticacaoView.Dto.class)
     private String tipo = "Bearer";
 
-	@JsonView(Views.Autenticacao.Dto.class)
+	@JsonView(Views.AutenticacaoView.Dto.class)
 	private Usuario usuario;
     
     public Token(String token, Usuario usuario) {

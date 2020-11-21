@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.ActiveProfiles;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -36,7 +37,7 @@ public class UsuarioRepositoryTest {
 
         this.usuario = UsuarioDataBuilderTest.builder()
                                         .comNome("Fulano")
-                                        .comCpf("12346584690")
+                                        .comCpf("02346584690")
                                         .comDataNascimento(LocalDate.of(1985, 5, 12))
                                         .masculino()
                                         .comSenha("123456")
@@ -82,7 +83,17 @@ public class UsuarioRepositoryTest {
     @Test
     public void deveSelecionarUsuarioPeloNomeECpf(){
         usuarioRepository.save(this.usuario);
-        Usuario usuario = usuarioRepository.findByNomeAndCpf("Fulano", "12346584690").get();
+        Usuario usuario = usuarioRepository.findByNomeAndCpf("Fulano", "02346584690").get();
         assertNotNull(usuario);
     }
+
+    @Test
+    public void deveSelecionarUsuarioComCpfIniciaComZero(){
+        usuarioRepository.save(this.usuario);
+
+        List<Usuario> usuario = usuarioRepository.findCpfsComecaZero();
+        assertEquals(1, usuario.size());
+    }
+
+
 }
