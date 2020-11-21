@@ -1,7 +1,6 @@
 package br.com.sulamerica.desafio.api.model.entity;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -11,6 +10,8 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import br.com.sulamerica.desafio.api.model.entity.enums.Sexo;
+import br.com.sulamerica.desafio.api.validation.DataNascimentoValid;
+import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -27,6 +28,7 @@ public class Usuario implements UserDetails {
 
 	@NotNull
 	@NotEmpty
+	@CPF
 	private String cpf;
 
 	@Enumerated(EnumType.STRING)
@@ -34,6 +36,7 @@ public class Usuario implements UserDetails {
 	private Sexo sexo;
 
 	@NotNull
+	@DataNascimentoValid
 	private LocalDate dataNascimento;
 
 	private boolean status = true;

@@ -5,10 +5,6 @@ import br.com.sulamerica.desafio.api.model.entity.Perfil;
 import br.com.sulamerica.desafio.api.model.entity.Usuario;
 import br.com.sulamerica.desafio.api.model.entity.enums.Sexo;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
