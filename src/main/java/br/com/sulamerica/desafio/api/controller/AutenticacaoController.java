@@ -9,11 +9,10 @@ import br.com.sulamerica.desafio.api.view.Views;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +23,7 @@ import javax.validation.Valid;
 import com.fasterxml.jackson.annotation.JsonView;
 
 @RestController
-@RequestMapping(Endpoints.Autenticacao.AUTH)
+@RequestMapping(Endpoints.Autenticacao.AUTH_ENDPOINT)
 @Profile(value = {Profiles.PRODUCAO, Profiles.TESTE})
 public class AutenticacaoController {
 
@@ -36,10 +35,8 @@ public class AutenticacaoController {
 
     @PostMapping
     @JsonView(Views.Autenticacao.Dto.class)
-    public ResponseEntity<Token> auth(@RequestBody
-                                      @Valid 
+    public ResponseEntity<Token> auth(@RequestBody @Validated(Views.Autenticacao.Form.class)
                                       @JsonView(Views.Autenticacao.Form.class) Usuario login){
-
 
         var dadosLogin = new UsernamePasswordAuthenticationToken(login.getUsername(), login.getPassword());
         try{
@@ -47,8 +44,10 @@ public class AutenticacaoController {
             String token = tokenService.token(authentication);
             Usuario usuario = (Usuario) authentication.getPrincipal();
             return ResponseEntity.ok(new Token(token, usuario));    
-        }catch(AuthenticationException e){
-            throw new AuthenticationCredentialsNotFoundException("Usuário Inválido");
+        }catch(BadCredentialsException e){
+            throw new BadCredentialsException("Usuário Inválido");
+        }catch (LockedException e){
+            throw new LockedException("Usuário Bloqueado");
         }
     }
 }

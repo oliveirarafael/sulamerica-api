@@ -5,7 +5,7 @@ public class Endpoints {
 
     public static class Autenticacao{
         private Autenticacao(){}
-        public static final String AUTH = "/auth";
+        public static final String AUTH_ENDPOINT = "/auth";
     }
 
     public static class Cargos {

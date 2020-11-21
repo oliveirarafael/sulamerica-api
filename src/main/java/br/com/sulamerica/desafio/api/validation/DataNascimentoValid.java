@@ -12,7 +12,7 @@ import javax.validation.Payload;
 @Retention(RetentionPolicy.RUNTIME)
 @Constraint(validatedBy = DataNascimentoValidator.class)
 public @interface DataNascimentoValid {
-    String message() default "{birthdate.not.valid}";
+    String message() default "{datanascimento.not.valid}";
 
     Class<?>[] groups() default {};
 

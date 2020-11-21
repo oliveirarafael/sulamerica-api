@@ -21,10 +21,10 @@ public class TokenService {
     
     private Date hoje;
 
-    @Value("${exchange.dm10.api.jwt.expiration}")
+    @Value("${sulamerica.desafio.api.jwt.expiration}")
     private String expiration;
 
-    @Value("${exchange.dm10.api.jwt.secret}")
+    @Value("${sulamerica.desafio.api.jwt.secret}")
     private String secret;
 
     private Date dataExpiracao;

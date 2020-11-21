@@ -14,6 +14,7 @@ import br.com.sulamerica.desafio.api.validation.DataNascimentoValid;
 import br.com.sulamerica.desafio.api.view.Views;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.validator.constraints.br.CPF;
 import org.springframework.security.core.GrantedAuthority;
@@ -27,24 +28,32 @@ public class Usuario implements UserDetails {
 	@JsonView(value = {Views.UsuarioView.Dto.class, Views.Autenticacao.Dto.class})
 	private Long id;
 
-	@NotNull
-	@NotEmpty
-	@JsonView(value = {Views.UsuarioView.Dto.class, Views.UsuarioView.Form.Post.class, Views.UsuarioView.Form.Put.class, Views.Autenticacao.Dto.class})
+	@NotNull(groups = {Views.UsuarioView.Form.class, Views.Autenticacao.Form.class})
+	@NotEmpty(groups = {Views.UsuarioView.Form.class, Views.Autenticacao.Form.class})
+	@JsonView(value = {Views.UsuarioView.Dto.class, Views.UsuarioView.Form.Post.class,
+			           Views.UsuarioView.Form.Put.class, Views.Autenticacao.Dto.class, Views.Autenticacao.Form.class})
 	private String nome;
 
-	@NotNull
-	@NotEmpty
-	@CPF
+	@NotEmpty(groups = {Views.UsuarioView.Form.Post.class, Views.Autenticacao.Form.class})
+	@NotNull(groups = {Views.UsuarioView.Form.Post.class, Views.Autenticacao.Form.class})
+	@JsonView(value = {Views.UsuarioView.Form.Post.class,
+			Views.UsuarioView.Form.Put.class,
+			Views.Autenticacao.Form.class})
+	private String senha;
+
+	@NotNull(groups = Views.UsuarioView.Form.class)
+	@NotEmpty(groups = Views.UsuarioView.Form.class)
+	@CPF(groups = Views.UsuarioView.Form.class)
 	@JsonView(value = {Views.UsuarioView.Dto.class, Views.UsuarioView.Form.Post.class, Views.UsuarioView.Form.Put.class})
 	private String cpf;
 
 	@Enumerated(EnumType.STRING)
-	@NotNull
+	@NotNull(groups = Views.UsuarioView.Form.class)
 	@JsonView(value = {Views.UsuarioView.Dto.class, Views.UsuarioView.Form.Post.class, Views.UsuarioView.Form.Put.class})
 	private Sexo sexo;
 
-	@NotNull
-	@DataNascimentoValid
+	@NotNull(groups = Views.UsuarioView.Form.class)
+	@DataNascimentoValid(groups = Views.UsuarioView.Form.class)
 	@JsonView(value = {Views.UsuarioView.Dto.class, Views.UsuarioView.Form.Post.class, Views.UsuarioView.Form.Put.class})
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataNascimento;
@@ -52,18 +61,14 @@ public class Usuario implements UserDetails {
 	@JsonView(value = {Views.UsuarioView.Dto.class, Views.UsuarioView.Form.Post.class, Views.UsuarioView.Form.Put.class})
 	private boolean status = true;
 
-	@NotEmpty
-	@NotNull
-	@JsonView(value = {Views.UsuarioView.Form.Post.class, Views.UsuarioView.Form.Put.class})
-	private String senha;
 
 	@ManyToOne
-	@NotNull
+	@NotNull(groups = Views.UsuarioView.Form.class)
 	@JsonView(value = {Views.UsuarioView.Dto.class, Views.UsuarioView.Form.Post.class, Views.UsuarioView.Form.Put.class})
 	private Cargo cargo;
 
 	@ManyToMany(fetch = FetchType.EAGER)
-	@NotNull
+	@NotNull(groups = Views.UsuarioView.Form.class)
 	@JsonView(value = {Views.UsuarioView.Dto.class, Views.UsuarioView.Form.Post.class, Views.UsuarioView.Form.Put.class})
 	private List<Perfil> perfis;
 
@@ -82,6 +87,11 @@ public class Usuario implements UserDetails {
 		this.senha = senha;
 		this.cargo = cargo;
 		this.perfis = perfis;
+	}
+
+	public Usuario(String nome, String senha) {
+		this.nome = nome;
+		this.senha = senha;
 	}
 
 	public Long getId() {

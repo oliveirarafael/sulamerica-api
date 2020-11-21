@@ -10,11 +10,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.transaction.Transactional;
-import javax.validation.Valid;
 import java.net.URI;
 
 import static br.com.sulamerica.desafio.api.controller.endpoint.Endpoints.Usuarios.USUARIOS_ENDPOINT;
@@ -45,7 +45,7 @@ public class UsuarioController {
     @PostMapping
     @Transactional
     @JsonView(Views.UsuarioView.Dto.class)
-    public ResponseEntity<Usuario> salvar(@RequestBody @Valid @JsonView(Views.UsuarioView.Form.Post.class) Usuario usuario, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<Usuario> salvar(@RequestBody @Validated(Views.UsuarioView.Form.class) @JsonView(Views.UsuarioView.Form.Post.class) Usuario usuario, UriComponentsBuilder uriBuilder) {
         Usuario usuarioCadastrado = service.salvar(usuario);
         URI uri = uriBuilder.path(USUARIOS_ENDPOINT + USUARIOS_ID_ENDPOINT).buildAndExpand(usuarioCadastrado.getId()).toUri();
         return ResponseEntity.created(uri).body(usuarioCadastrado);
@@ -55,7 +55,8 @@ public class UsuarioController {
     @Transactional
     @JsonView(Views.UsuarioView.Dto.class)
     public ResponseEntity<Usuario> atualizar(@PathVariable Long id,
-                                       @RequestBody @Valid @JsonView(Views.UsuarioView.Form.Put.class) Usuario usuario) {
+                                       @RequestBody @Validated(Views.UsuarioView.Form.class)
+                                       @JsonView(Views.UsuarioView.Form.Put.class) Usuario usuario) {
 
         return ResponseEntity.ok(service.atualizar(id, usuario));
     }
