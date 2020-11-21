@@ -3,6 +3,11 @@ package br.com.sulamerica.desafio.api.controller.endpoint;
 public class Endpoints {
     private Endpoints(){}
 
+    public static class Autenticacao{
+        private Autenticacao(){}
+        public static final String AUTH = "/auth";
+    }
+
     public static class Cargos {
         private Cargos(){}
         public static final String CARGOS_ENDPOINT = "/cargos";

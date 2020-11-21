@@ -11,7 +11,8 @@ import javax.validation.constraints.NotNull;
 
 import br.com.sulamerica.desafio.api.model.entity.enums.Sexo;
 import br.com.sulamerica.desafio.api.validation.DataNascimentoValid;
-import br.com.sulamerica.desafio.api.view.UsuarioView;
+import br.com.sulamerica.desafio.api.view.Views;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.hibernate.validator.constraints.br.CPF;
@@ -23,47 +24,47 @@ public class Usuario implements UserDetails {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@JsonView(value = {UsuarioView.DTO.class})
+	@JsonView(value = {Views.UsuarioView.Dto.class, Views.Autenticacao.Dto.class})
 	private Long id;
 
 	@NotNull
 	@NotEmpty
-	@JsonView(value = {UsuarioView.DTO.class, UsuarioView.FORM.Post.class, UsuarioView.FORM.Put.class})
+	@JsonView(value = {Views.UsuarioView.Dto.class, Views.UsuarioView.Form.Post.class, Views.UsuarioView.Form.Put.class, Views.Autenticacao.Dto.class})
 	private String nome;
 
 	@NotNull
 	@NotEmpty
 	@CPF
-	@JsonView(value = {UsuarioView.DTO.class, UsuarioView.FORM.Post.class, UsuarioView.FORM.Put.class})
+	@JsonView(value = {Views.UsuarioView.Dto.class, Views.UsuarioView.Form.Post.class, Views.UsuarioView.Form.Put.class})
 	private String cpf;
 
 	@Enumerated(EnumType.STRING)
 	@NotNull
-	@JsonView(value = {UsuarioView.DTO.class, UsuarioView.FORM.Post.class, UsuarioView.FORM.Put.class})
+	@JsonView(value = {Views.UsuarioView.Dto.class, Views.UsuarioView.Form.Post.class, Views.UsuarioView.Form.Put.class})
 	private Sexo sexo;
 
 	@NotNull
 	@DataNascimentoValid
-	@JsonView(value = {UsuarioView.DTO.class, UsuarioView.FORM.Post.class, UsuarioView.FORM.Put.class})
+	@JsonView(value = {Views.UsuarioView.Dto.class, Views.UsuarioView.Form.Post.class, Views.UsuarioView.Form.Put.class})
 	@JsonFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataNascimento;
 
-	@JsonView(value = {UsuarioView.DTO.class, UsuarioView.FORM.Post.class, UsuarioView.FORM.Put.class})
+	@JsonView(value = {Views.UsuarioView.Dto.class, Views.UsuarioView.Form.Post.class, Views.UsuarioView.Form.Put.class})
 	private boolean status = true;
 
 	@NotEmpty
 	@NotNull
-	@JsonView(value = {UsuarioView.FORM.Post.class, UsuarioView.FORM.Put.class})
+	@JsonView(value = {Views.UsuarioView.Form.Post.class, Views.UsuarioView.Form.Put.class})
 	private String senha;
 
 	@ManyToOne
 	@NotNull
-	@JsonView(value = {UsuarioView.DTO.class, UsuarioView.FORM.Post.class, UsuarioView.FORM.Put.class})
+	@JsonView(value = {Views.UsuarioView.Dto.class, Views.UsuarioView.Form.Post.class, Views.UsuarioView.Form.Put.class})
 	private Cargo cargo;
 
 	@ManyToMany(fetch = FetchType.EAGER)
 	@NotNull
-	@JsonView(value = {UsuarioView.DTO.class, UsuarioView.FORM.Post.class, UsuarioView.FORM.Put.class})
+	@JsonView(value = {Views.UsuarioView.Dto.class, Views.UsuarioView.Form.Post.class, Views.UsuarioView.Form.Put.class})
 	private List<Perfil> perfis;
 
 	public Usuario() {

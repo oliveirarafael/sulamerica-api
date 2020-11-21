@@ -2,7 +2,7 @@ package br.com.sulamerica.desafio.api.controller;
 
 import br.com.sulamerica.desafio.api.model.entity.Usuario;
 import br.com.sulamerica.desafio.api.service.UsuarioService;
-import br.com.sulamerica.desafio.api.view.UsuarioView;
+import br.com.sulamerica.desafio.api.view.Views;
 import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -28,23 +28,24 @@ public class UsuarioController {
     private UsuarioService service;
 
     @GetMapping
-    @JsonView(UsuarioView.DTO.class)
-    public Page<Usuario> getPerfis(@PageableDefault(sort = "nome",
-                                            direction = Direction.DESC,
-                                            page = 0, size = 10) Pageable paginacao){
+    @JsonView(Views.UsuarioView.Dto.class)
+    public Page<Usuario> getUsuarios(@PageableDefault(sort = "nome",
+                                                      direction = Direction.DESC,
+                                                      page = 0, size = 10) Pageable paginacao){
 
         return service.getUsuarios(paginacao);
     }
 
     @GetMapping(USUARIOS_ID_ENDPOINT)
-    @JsonView(UsuarioView.DTO.class)
-    public Usuario getPerfilPorId(@PathVariable Long id){
+    @JsonView(Views.UsuarioView.Dto.class)
+    public Usuario getUsuarioPorId(@PathVariable Long id){
         return service.getUsuarioPorId(id);
     }
 
     @PostMapping
     @Transactional
-    public ResponseEntity<Usuario> salvar(@RequestBody @Valid @JsonView(UsuarioView.FORM.Post.class) Usuario usuario, UriComponentsBuilder uriBuilder) {
+    @JsonView(Views.UsuarioView.Dto.class)
+    public ResponseEntity<Usuario> salvar(@RequestBody @Valid @JsonView(Views.UsuarioView.Form.Post.class) Usuario usuario, UriComponentsBuilder uriBuilder) {
         Usuario usuarioCadastrado = service.salvar(usuario);
         URI uri = uriBuilder.path(USUARIOS_ENDPOINT + USUARIOS_ID_ENDPOINT).buildAndExpand(usuarioCadastrado.getId()).toUri();
         return ResponseEntity.created(uri).body(usuarioCadastrado);
@@ -52,8 +53,9 @@ public class UsuarioController {
 
     @PutMapping(USUARIOS_ID_ENDPOINT)
     @Transactional
+    @JsonView(Views.UsuarioView.Dto.class)
     public ResponseEntity<Usuario> atualizar(@PathVariable Long id,
-                                       @RequestBody @Valid @JsonView(UsuarioView.FORM.Put.class) Usuario usuario) {
+                                       @RequestBody @Valid @JsonView(Views.UsuarioView.Form.Put.class) Usuario usuario) {
 
         return ResponseEntity.ok(service.atualizar(id, usuario));
     }
